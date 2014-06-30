@@ -97,6 +97,7 @@ namespace CSharpKoans
         {
             var composite = Styles.Rounded | Styles.Raised;
 
+            Assert.AreEqual(FILL_ME_IN, (int)composite);
             Assert.AreEqual(5, (int)composite);
         }
 
@@ -115,5 +116,6 @@ namespace CSharpKoans
         }
 
         private const int FILL_ME_IN = -1;
+        private const Direction ENUM_FILL_ME_IN = Direction.Up;
     }
 }

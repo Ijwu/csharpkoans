@@ -7,6 +7,10 @@ using NUnit.Framework;
 
 namespace CSharpKoans
 {
+    /// <summary>
+    /// LINQ is useful in searching XML files. For the Koans in this file
+    /// it may be required to open the XML file and investigate.
+    /// </summary>
     public class AboutLinqToXml : KoanContainer
     {
         private class Senator
@@ -107,6 +111,9 @@ namespace CSharpKoans
         /// <instructions>
         /// Fill in the LINQ queries to match the expected behavior.
         /// </instructions>
+        /// <hint>
+        /// The independent party has a party code of "ID"
+        /// </hint>
         [Koan]
         public void LinqToXmlCreatesObjectsFromXmlElements()
         {
