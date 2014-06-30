@@ -97,7 +97,6 @@ namespace CSharpKoans
         {
             var composite = Styles.Rounded | Styles.Raised;
 
-            Assert.AreEqual(FILL_ME_IN, (int)composite);
             Assert.AreEqual(5, (int)composite);
         }
 
