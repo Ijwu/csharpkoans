@@ -13,7 +13,7 @@ namespace CSharpKoans
         {
             public string LastName { get; set; }
             public string Party { get; set; }
-            public string Website { get; set; }
+            public string State { get; set; }
         }
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace CSharpKoans
         {
             var contactInfo = SenatorsDoc.Root;
 
-            Assert.AreEqual(FILL_ME_IN, contactInfo.Name.LocalName);
-            Assert.AreEqual(FILL_ME_IN, contactInfo.Parent);
-            Assert.AreEqual(FILL_ME_IN, contactInfo.HasElements);
+            Assert.AreEqual("contact_information", contactInfo.Name.LocalName);
+            Assert.AreEqual(null, contactInfo.Parent);
+            Assert.AreEqual(true, contactInfo.HasElements);
         }
 
         /// <summary>
@@ -48,18 +48,18 @@ namespace CSharpKoans
 
             var firstSenator = senators.First();
 
-            Assert.AreEqual(FILL_ME_IN, firstSenator.Name.LocalName);
-            Assert.AreEqual(FILL_ME_IN, firstSenator.Parent.Name.LocalName);
-            Assert.AreEqual(FILL_ME_IN, firstSenator.HasElements);
+            Assert.AreEqual("member", firstSenator.Name.LocalName);
+            Assert.AreEqual("contact_information", firstSenator.Parent.Name.LocalName);
+            Assert.AreEqual(true, firstSenator.HasElements);
 
-            Assert.AreEqual(FILL_ME_IN, firstSenator.Ancestors().Count());
+            Assert.AreEqual(1, firstSenator.Ancestors().Count());
 
             var lastNameNodes = firstSenator.Elements("last_name");
 
             var lastName = lastNameNodes.First();
 
-            Assert.AreEqual(FILL_ME_IN, lastName.Name.LocalName);
-            Assert.AreEqual(FILL_ME_IN, lastName.Value);
+            Assert.AreEqual("last_name", lastName.Name.LocalName);
+            Assert.AreEqual("Akaka", lastName.Value);
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace CSharpKoans
                         where e.Name == "state"
                         select e.Value;
 
-            Assert.AreEqual(FILL_ME_IN, state.Count());
-            Assert.AreEqual(FILL_ME_IN, state.First());
+            Assert.AreEqual(1, state.Count());
+            Assert.AreEqual("HI", state.First());
         }
 
         /// <summary>
@@ -93,7 +93,10 @@ namespace CSharpKoans
         public void LinqToXmlProducesEnumerableData()
         {
             var contactInfo = SenatorsDoc.Root;
-            var nameOfThirdSenator = LINQ_FILL_ME_IN;
+            var thirdSenator = contactInfo.Elements().Skip(2).First();
+            var nameOfThirdSenator = (from s in thirdSenator.Elements()
+                                     where s.Name == "last_name"
+                                     select s).First().Value;
 
             Assert.AreEqual("Ayotte", nameOfThirdSenator);
         }
@@ -109,41 +112,28 @@ namespace CSharpKoans
         {
             var contactInfo = SenatorsDoc.Root;
 
-            var senatorObjects = LINQ_FILL_ME_IN;
+            var senatorObjects = from s in contactInfo.Elements()
+                                 select new Senator()
+                                 {
+                                     LastName = s.Element("last_name").Value,
+                                     State = s.Element("state").Value,
+                                     Party = s.Element("party").Value
+                                 };
 
-            Assert.AreEqual("", senatorObjects.Last().LastName);
+            Assert.AreEqual("Wyden", senatorObjects.Last().LastName);
 
-            var democrats = LINQ_FILL_ME_IN;
+            var democrats = from s in senatorObjects where s.Party == "D" select s;
 
-            Assert.AreEqual(50, democrats.Count());
+            Assert.AreEqual(51, democrats.Count());
 
-            var stateOfIndependentSenator = LINQ_FILL_ME_IN;
+            var stateOfIndependentSenator = (from s in senatorObjects where s.Party == "ID" select s.State).First();
 
             Assert.AreEqual(stateOfIndependentSenator, "CT");
-        }
-
-        private class Food
-        { 
-            
-        }
-
-        /// <summary>
-        /// LINQ may be used to operate on XML data by turning the data into objects.
-        /// </summary>
-        /// <instructions>
-        /// Fill in the Food class.
-        /// Capture the XML data into an IEnumerable of type Food.
-        /// </instructions>
-        [Koan]
-        public void YouCanMakeComplexQueriesIntoXmlFilesWithLinq()
-        {
-            var root = NutritionDoc.Root;            
         }
 
         private const int FILL_ME_IN = -1;
         private IEnumerable<Senator> LINQ_FILL_ME_IN;
         private string[] ARRAY_FILL_ME_IN = new string[] { };
         XDocument SenatorsDoc = XDocument.Load(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "senators_cfm.xml"));
-        XDocument NutritionDoc = XDocument.Load(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "nutrition.xml"));
     }
 }

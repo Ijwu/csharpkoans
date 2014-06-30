@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CSharpKoans.Core;
 using NUnit.Framework;
 
@@ -15,9 +16,23 @@ namespace CSharpKoans
             public string Henchman { get; set; }
             public string Mission { get; set; }
 
+            private List<string> Plan = new List<string>();
+
+            private int PlanIndex = 0;
+
             internal string RetrieveNextStepOfPlan()
             {
-                throw new NotImplementedException();
+                return Plan[PlanIndex++];
+            }
+
+            public void MakePlan(string plan)
+            {
+                Mission = plan;
+            }
+
+            public void MakePlan(List<string> plan)
+            {
+                Plan = plan;
             }
         }
 
@@ -37,7 +52,7 @@ namespace CSharpKoans
             var AnotherBrain = TheBrain;
             AnotherBrain.Mission = "The same thing we do every night";
 
-            Assert.AreEqual(FILL_ME_IN, AnotherBrain.Mission);
+            Assert.AreEqual(TheBrain.Mission, AnotherBrain.Mission);
         }
 
         /// <summary>
@@ -51,7 +66,7 @@ namespace CSharpKoans
         {
             var Joker = new Megalomaniac();
 
-            // Joker.MakePlan("Destroy Batman");
+            Joker.MakePlan("Destroy Batman");
 
             Assert.AreEqual("Destroy Batman", Joker.Mission);
         }
@@ -68,7 +83,9 @@ namespace CSharpKoans
         {
             var Joker = new Megalomaniac();
 
-            // Joker.MakePlan("Destroy Batman");
+            Joker.MakePlan("Destroy Batman");
+
+            Joker.MakePlan(new List<string>{"Steal the batmobile"});
 
             Assert.AreEqual("Destroy Batman", Joker.Mission);
             Assert.AreEqual("Steal the batmobile", Joker.RetrieveNextStepOfPlan());
@@ -87,8 +104,18 @@ namespace CSharpKoans
         {
             var Joker = new Megalomaniac();
 
-            // Uncomment the next line and write the method to make the asserts pass:
-            // Joker.MakePlan("Destroy Batman");
+            Joker.MakePlan("Destroy Batman");
+
+            Joker.MakePlan(new List<string>
+            {
+                "Steal the batmobile",
+                "Drive batmobile to Central Park",
+                "Cause accident involving catwoman",
+                "Escape from Central Park",
+                "Convince Batman he harmed Catwoman",
+                "Get Batman to reveal his secret identity",
+                "Put Bruce Wayne in Jail"
+            });
 
             Assert.AreEqual("Destroy Batman", Joker.Mission);
             Assert.AreEqual("Steal the batmobile", Joker.RetrieveNextStepOfPlan());

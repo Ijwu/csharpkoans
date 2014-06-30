@@ -1,3 +1,4 @@
+using System;
 using CSharpKoans.Core;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace CSharpKoans
         {
             var i = 42;
 
-            Assert.AreEqual(typeof(TYPE_FILL_ME_IN), i.GetType());
+            Assert.AreEqual(typeof(int), i.GetType());
         }
 
         /// <summary>
@@ -34,9 +35,7 @@ namespace CSharpKoans
             int initialValue = 5;
             double implicitlyConverted = initialValue;
 
-            int finalValue = FILL_ME_IN;
-
-            //finalValue = implicitlyConverted;
+            int finalValue = (int) implicitlyConverted;
 
             Assert.AreEqual(initialValue, finalValue);
         }
@@ -55,7 +54,7 @@ namespace CSharpKoans
             int numerator = 27;
             int denominator = 5;
 
-            int expected = FILL_ME_IN;
+            int expected = 5;
             int actual = numerator / denominator;
             Assert.AreEqual(expected, actual);
         }
@@ -73,7 +72,7 @@ namespace CSharpKoans
             double numerator = 27;
             double denominator = 5;
 
-            double expected = FILL_ME_IN;
+            double expected = 5.4;
             double actual = numerator / denominator;
             Assert.AreEqual(expected, actual);
         }
@@ -95,8 +94,7 @@ namespace CSharpKoans
 
             for (int i = 0; i < 1000000; i++)
             {
-                values[i] = total;
-                total += increment;
+                values[i] = increment*(i + 1);
             }
 
             Assert.AreEqual(1000.0, values[999999]);
@@ -121,9 +119,9 @@ namespace CSharpKoans
 
             j -= 200;
 
-            Assert.AreEqual(FILL_ME_IN, i);
+            Assert.AreEqual(-75, i);
 
-            Assert.AreEqual(FILL_ME_IN, j);
+            Assert.AreEqual(4294967146, j);
         }
 
         /// <summary>
@@ -141,7 +139,7 @@ namespace CSharpKoans
 
             var k = i + j;
 
-            Assert.AreEqual(typeof(TYPE_FILL_ME_IN), k.GetType());
+            Assert.AreEqual(typeof(Int64), k.GetType());
         }
 
         private int FILL_ME_IN = -1;

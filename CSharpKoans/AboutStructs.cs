@@ -22,8 +22,8 @@ namespace CSharpKoans
         {
             var pt = new Point();
 
-            Assert.AreEqual(FILL_ME_IN, pt.X);
-            Assert.AreEqual(FILL_ME_IN, pt.Y);
+            Assert.AreEqual(0, pt.X);
+            Assert.AreEqual(0, pt.Y);
         }
         
         /// <summary>
@@ -47,10 +47,10 @@ namespace CSharpKoans
             pt2.X *= 2;
             pt2.Y *= 2;
 
-            Assert.AreEqual(FILL_ME_IN, pt1.X);
-            Assert.AreEqual(FILL_ME_IN, pt1.Y);
-            Assert.AreEqual(FILL_ME_IN, pt2.X);
-            Assert.AreEqual(FILL_ME_IN, pt2.Y);
+            Assert.AreEqual(3, pt1.X);
+            Assert.AreEqual(4, pt1.Y);
+            Assert.AreEqual(6, pt2.X);
+            Assert.AreEqual(8, pt2.Y);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace CSharpKoans
 
             pt1.X = 12;
 
-            Assert.AreEqual(FILL_ME_IN, ((Point)pt2).X);
+            Assert.AreEqual(3, ((Point)pt2).X);
         }
 
         private const double FILL_ME_IN = -1;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using CSharpKoans.Core;
 using NUnit.Framework;
 
@@ -31,11 +32,13 @@ namespace CSharpKoans
                                      where n % 2 == 0
                                      select n;
 
-            Assert.AreEqual(FILL_ME_IN, evens.Count());
+            Assert.AreEqual(2, evens.Count());
 
-            IEnumerable<int> odds = LINQ_FILL_ME_IN;
+            IEnumerable<int> odds = from n in numbers
+                                    where n % 2 == 1
+                                    select n;
 
-            Assert.AreEqual(FILL_ME_IN, odds.Count());
+            Assert.AreEqual(3, odds.Count());
         }
 
         /// <summary>
@@ -54,7 +57,7 @@ namespace CSharpKoans
             Assert.AreEqual(2, evens.Count());
 
 
-            IEnumerable<int> linqSyntaxEvens = LINQ_FILL_ME_IN;
+            IEnumerable<int> linqSyntaxEvens = from n in numbers where n % 2 == 0 select n;
             Assert.AreEqual(2, linqSyntaxEvens.Count());
         }
 
@@ -71,9 +74,9 @@ namespace CSharpKoans
 
             int[] anArray = integers.Select(i => i).ToArray();
 
-            Assert.AreEqual(FILL_ME_IN, anArray.Contains(1));
-            Assert.AreEqual(FILL_ME_IN, anArray.Contains(3));
-            Assert.AreEqual(FILL_ME_IN, anArray.Contains(100));
+            Assert.AreEqual(true, anArray.Contains(1));
+            Assert.AreEqual(true, anArray.Contains(3));
+            Assert.AreEqual(false, anArray.Contains(100));
         }
 
         /// <summary>
@@ -88,7 +91,7 @@ namespace CSharpKoans
         {
             var numbers = new List<int> { 1, 2, 3, 4, 5 };
 
-            var squaredEvens = numbers.Where(LAMBDA_FILL_ME_IN).Select(LAMBDA_FILL_ME_IN); 
+            var squaredEvens = numbers.Where(n => n % 2 == 0).Select(n => n*n); 
             Assert.AreEqual(4, squaredEvens.First());
         }
 
@@ -109,11 +112,11 @@ namespace CSharpKoans
                                    select Count(b); 
      
 
-            Assert.AreEqual(count, FILL_ME_IN, "How many times was Count called so far?");
+            Assert.AreEqual(count, 0, "How many times was Count called so far?");
 
             var aSelectStatementIsNowExecuted = aSelectStatement.ToList();
 
-            Assert.AreEqual(count, FILL_ME_IN, "How many times was Count called now?");
+            Assert.AreEqual(count, 4, "How many times was Count called now?");
         }
 
         /// <summary>
@@ -136,14 +139,14 @@ namespace CSharpKoans
                 return rand.Next();
             });
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(0, counter);
 
             var first = randomSequence.First();
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(1, counter);
 
             var second = randomSequence.Skip(1).First();
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(3, counter);
         }
 
         /// <summary>
@@ -161,7 +164,7 @@ namespace CSharpKoans
                         select Count(b);
 
             var numBooks = books.Count();
-            Assert.AreEqual(count, FILL_ME_IN, "How many times was Count called?");
+            Assert.AreEqual(count, 4, "How many times was Count called?");
         }
 
         /// <summary>
@@ -183,11 +186,11 @@ namespace CSharpKoans
 
             var countBooks = books.Count();
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(4, counter);
 
             var countAgain = books.Count();
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(8, counter);
         }
 
         /// <summary>
@@ -206,7 +209,7 @@ namespace CSharpKoans
                 return b.PublicationYear < 1900;
             });
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(4, counter);
 
             counter = 0;
             var booksList = Library.Books.Any(b =>
@@ -215,7 +218,7 @@ namespace CSharpKoans
                 return b.PublicationYear < 1970;
             });
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(1, counter);
         }
 
         /// <summary>
@@ -237,11 +240,11 @@ namespace CSharpKoans
 
             var countBooks = booksList.Count();
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(4, counter);
 
             var countAgain = booksList.Count();
 
-            Assert.AreEqual(FILL_ME_IN, counter);
+            Assert.AreEqual(4, counter);
         }
       
         /// <summary>
@@ -263,7 +266,7 @@ namespace CSharpKoans
                          orderby b.PublicationYear
                          select b.Title;
 
-            Assert.AreEqual(FILL_ME_IN, byYear.First());
+            Assert.AreEqual("Anna Karenina", byYear.First());
         }
 
         /// <summary>
@@ -286,7 +289,7 @@ namespace CSharpKoans
                          orderby b.PublicationYear, b.Author
                          select b.Title;
 
-            Assert.AreEqual(FILL_ME_IN, byYear.First());
+            Assert.AreEqual("Anna Karenina", byYear.First());
         }
 
         /// <summary>
@@ -300,8 +303,8 @@ namespace CSharpKoans
         [Koan]
         public void LINQCanCombineSequenceElements()
         {
-            var titles = String.Empty;
-            Assert.AreEqual("Lolita, Slaughterhouse-Five, The White Tiger, Anna Karenina", titles);
+            var titles = (from n in Library.Books select n.Title + ", ").Aggregate((x, y) => x + y);
+            Assert.AreEqual("Lolita, Slaughterhouse-Five, The White Tiger, Anna Karenina, ", titles);
         }
 
         int count = 0;

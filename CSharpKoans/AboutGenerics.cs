@@ -31,12 +31,15 @@ namespace CSharpKoans
             mylist.Add("Grand Circus");
 
             int t = 0;
-            foreach (int x in mylist)
+            foreach (var x in mylist)
             {
-                    t += x;
+                if (x is int)
+                {
+                    t += (int)x;
+                }
             }
 
-            Assert.IsInstanceOf<CLASS_FILL_ME_IN>(mylist[2]);
+            Assert.IsInstanceOf<string>(mylist[2]);
 
             Assert.AreEqual(10, t);
         }
@@ -59,7 +62,7 @@ namespace CSharpKoans
             int t = 0;
             foreach (var x in myList)
             {
-               //FILL_ME_IN
+                t += x;
             }
            
             Assert.AreEqual(10, t);
@@ -106,11 +109,11 @@ namespace CSharpKoans
             animals.Add(new Animal());
             animals.Add(new Cat());
 
-            Assert.IsInstanceOf<CLASS_FILL_ME_IN>(animals.First());
+            Assert.IsInstanceOf<Dog>(animals.First());
 
-            Assert.AreEqual(FILL_ME_IN, animals.First().Talk());
+            Assert.AreEqual("Woof", animals.First().Talk());
 
-            Assert.AreEqual(FILL_ME_IN, animals[2].Talk());
+            Assert.AreEqual("Meow", animals[2].Talk());
         }
 
         public interface IReadable
@@ -174,8 +177,8 @@ namespace CSharpKoans
             readingMaterial.Add(new Blog());
             readingMaterial.Add(new Magazine());
 
-            Assert.AreEqual(FILL_ME_IN, readingMaterial.First().TurnToPage(1));
-            Assert.AreEqual(FILL_ME_IN, readingMaterial[2].TurnToPage(1));
+            Assert.AreEqual("generics", readingMaterial.First().TurnToPage(1));
+            Assert.AreEqual("content", readingMaterial[2].TurnToPage(1));
         }
 
         public class Bag<T> 
@@ -206,6 +209,26 @@ namespace CSharpKoans
             {
                 return Storage.Count;
             }
+
+            public bool Contains(T item)
+            {
+                return Storage.ContainsKey(item);
+            }
+
+            public void Remove(T item)
+            {
+                if (Storage.ContainsKey(item))
+                {
+                    if (Storage[item] == 1)
+                    {
+                        Storage.Remove(item);       
+                    }
+                    else
+                    {
+                        Storage[item]--;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -221,34 +244,38 @@ namespace CSharpKoans
             Bag<string> myStrings = new Bag<string>();
             myStrings.Add("c#");
 
-            //Assert.True(myStrings.Contains("c#"));
+            Assert.True(myStrings.Contains("c#"));
 
             var cat = new Cat { Name = "vega" };
             Bag<Animal> animals = new Bag<Animal>();
             animals.Add(cat);
 
-            //Assert.True(animals.Contains(cat));
+            Assert.True(animals.Contains(cat));
 
             animals.Add(cat);
 
-            //animals.Remove(cat);
+            animals.Remove(cat);
 
-            //Assert.IsTrue(animals.Contains(cat));
+            Assert.IsTrue(animals.Contains(cat));
 
-            //animals.Remove(cat);
+            animals.Remove(cat);
 
-            //Assert.IsFalse(animals.Contains(cat));
+            Assert.IsFalse(animals.Contains(cat));
         }
 
         public class SortableBag<T> : Bag<T> where T : System.IComparable<T>
         {
-            public IEnumerable<T> Sort() 
+            public IEnumerable<T> Sort()
             {
-                return null;
+                var ret = Storage.Keys.ToList();
+                ret.Sort();
+                return ret;
             }
             public IEnumerable<T> Sort(IComparer<T> comparer)
             {
-                return null;
+                var ret = Storage.Keys.ToList();
+                ret.Sort(comparer);
+                return ret;
             }
         }
 
@@ -261,7 +288,17 @@ namespace CSharpKoans
             /// </hint>
             public int Compare(string x, string y)
             {
-                throw new NotImplementedException();
+                if (x.Length > y.Length)
+                {
+                    return 1;
+                }
+                
+                if (x.Length < y.Length)
+                {
+                    return -1;
+                }
+
+                return 0;
             }
         }
         

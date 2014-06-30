@@ -19,7 +19,7 @@ namespace CSharpKoans
         [Koan]
         public void AssertTruth()
         {  
-             Assert.IsTrue(false);
+             Assert.IsTrue(true);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace CSharpKoans
         [Koan]
         public void AssertWithMessage()
         { 
-            Assert.IsTrue(false, "This should be true -- Please fix this");
+            Assert.IsTrue(true, "This should be true -- Please fix this");
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace CSharpKoans
         public void AssertEquality()
         {
             var expected_value = 1 + 1;
-            var actual_value = FILL_ME_IN;
+            var actual_value = 2;
          
 
             Assert.AreEqual(expected_value, actual_value);

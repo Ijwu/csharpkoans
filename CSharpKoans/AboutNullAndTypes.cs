@@ -17,7 +17,7 @@ namespace CSharpKoans
         [Koan]
         public void MethodsCannotBeCalledOnNull()
         { 
-            MyClass myClass = null;
+            MyClass myClass = new MyClass();
             myClass.AMethod();
         }
 
@@ -30,7 +30,7 @@ namespace CSharpKoans
         [Koan]
         public void ComparingNulls()
         {
-            Assert.AreEqual(FILL_ME_IN, null == null);
+            Assert.AreEqual(true, null == null);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace CSharpKoans
             string t = String.Empty; 
 
             bool b = (t.Equals(s));
-            Assert.AreEqual(FILL_ME_IN, b);
+            Assert.AreEqual(false, b);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace CSharpKoans
             int i = new int();
             int j = 0;
 
-            Assert.AreEqual(FILL_ME_IN, i == j);
+            Assert.AreEqual(true, i == j);
         }
 
         /// <summary>
@@ -80,12 +80,12 @@ namespace CSharpKoans
         public void NullableTypes()
         {
             int? nullableInt = null;
-            Assert.AreEqual(FILL_ME_IN, nullableInt.HasValue);
+            Assert.AreEqual(false, nullableInt.HasValue);
 
             nullableInt = 0;
-            Assert.AreEqual(FILL_ME_IN, nullableInt.HasValue);
+            Assert.AreEqual(true, nullableInt.HasValue);
 
-            Assert.AreEqual(FILL_ME_IN, nullableInt.Value);
+            Assert.AreEqual(0, nullableInt.Value);
         }
 
         private string FILL_ME_IN = "FILL ME IN";

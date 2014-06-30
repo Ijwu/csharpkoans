@@ -24,6 +24,22 @@ namespace CSharpKoans
             return rVal.ToString();
         }
 
+        private class Robin : ICharacter
+        {
+            public string SayCatchPhrase()
+            {
+                return "Holy Code Exercise, Batman! ";
+            }
+        }
+
+        private class Pinky : ICharacter
+        {
+            public string SayCatchPhrase()
+            {
+                return "Narf! ";
+            }
+        }
+
         /// <summary>
         /// Interfaces make promises that you must fulfil
         /// in your implementations.
@@ -35,11 +51,11 @@ namespace CSharpKoans
         [Koan]
         public void InterfacesProvideCommonContracts()
         {
-            var Robin = new object() as ICharacter;
-            var Pinky = new object() as ICharacter;
+            var Robin = new Robin();
+            var Pinky = new Pinky();
 
             Assert.AreEqual("Holy Code Exercise, Batman! Holy Code Exercise, Batman! Holy Code Exercise, Batman! ", RepeatCatchPhrase(Robin));
-            Assert.AreEqual("Narf! Narf! Narf!", RepeatCatchPhrase(Pinky));
+            Assert.AreEqual("Narf! Narf! Narf! ", RepeatCatchPhrase(Pinky));
         }
     }
 }

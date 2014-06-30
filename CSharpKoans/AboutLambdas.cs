@@ -30,9 +30,9 @@ namespace CSharpKoans
             KoanDelegate timesTwo = (n) => n*2;
             int result = timesTwo(5);
 
-            Assert.AreEqual(FILL_ME_IN, result);
+            Assert.AreEqual(10, result);
 
-            KoanDelegate plusFive = DELEGATE_FILL_ME_IN;
+            KoanDelegate plusFive = (n) => n + 5;
             int additionResult = plusFive(3);
             Assert.AreEqual(8, additionResult);
         }
@@ -49,7 +49,7 @@ namespace CSharpKoans
         [Koan]
         public void DelegatesCanHaveVariousArgumentAndReturnTypes()
         {
-            BooleanKoanDelegate isLongerThanFive = BOOL_DELEGATE_FILL_ME_IN;
+            BooleanKoanDelegate isLongerThanFive = (n) => n.Length > 5;
 
             Assert.IsTrue(isLongerThanFive("srtsolutions"));
             Assert.IsFalse(isLongerThanFive("a2"));
@@ -67,9 +67,9 @@ namespace CSharpKoans
         {
             Func<int, bool> myFunc = x => x > 5;
             bool result = myFunc(4);
-            Assert.AreEqual(FILL_ME_IN, result);
+            Assert.AreEqual(false, result);
 
-            bool makeThisTrue = myFunc(FILL_ME_IN);
+            bool makeThisTrue = myFunc(6);
             Assert.True(makeThisTrue);
         }
 
@@ -85,9 +85,9 @@ namespace CSharpKoans
         {
             int[] numbers = { 1,9,7,3,6,8,5};
             var smallNumbers = numbers.Where(n => n< 4);
-            Assert.AreEqual(FILL_ME_IN, smallNumbers.Count());
+            Assert.AreEqual(2, smallNumbers.Count());
           
-            IEnumerable<int> evenNumbers = numbers.Where(LAMBDA_FILL_ME_IN);
+            IEnumerable<int> evenNumbers = numbers.Where((x) => x % 2 == 0);
             Assert.AreEqual(2, evenNumbers.Count());
         }
 
@@ -102,9 +102,9 @@ namespace CSharpKoans
         public void CountQueryOperatorCanTakeALambda()
         {
             int[] numbers = { 1, 9, 7, 3, 6, 8, 5 };
-            Assert.AreEqual(FILL_ME_IN, numbers.Count());
+            Assert.AreEqual(7, numbers.Count());
 
-            int greaterThanSeven = numbers.Count(LAMBDA_FILL_ME_IN);
+            int greaterThanSeven = numbers.Count((x) => x > 7);
             Assert.AreEqual(2, greaterThanSeven);
         }
 
@@ -121,7 +121,7 @@ namespace CSharpKoans
             string firstName = "Bullwinkle";
             string lastName = "Moose";
 
-            Func<string, string, string> joinStrings = MULTIPLE_PARAMS_FILL_ME_IN;
+            Func<string, string, string> joinStrings = (x, y) => string.Format("{0}, {1}", lastName, firstName);
 
             var fullName = joinStrings(firstName, lastName);
 
@@ -143,7 +143,7 @@ namespace CSharpKoans
 
             IEnumerable<double> plusOne = doubles.Select((double x) => x + 1);
 
-            var implicitPlusOne = doubles;
+            var implicitPlusOne = doubles.Select((x) => x + 1);
 
             CollectionAssert.AreEquivalent(plusOne, implicitPlusOne);
         }
@@ -165,7 +165,11 @@ namespace CSharpKoans
             var someNumbers = numbers.Where(
                     x =>
                     {
-                        return true;
+                        if (x > 5 && x < 10)
+                        {
+                            return true;
+                        }
+                        return false;
                     }
                 ) ;
 
